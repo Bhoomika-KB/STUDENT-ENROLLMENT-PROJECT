@@ -127,7 +127,7 @@ def register(request,class_name):
                     student_obj.save()
                     message='old user class Registration successful'
                     student_name=student_obj.student_name
-                    send_mail(settings.EMAIL_SUBJECT.format(student_name,class_name), settings.EMAIL_BODY.format(class_name), settings.EMAIL_HOST_USER, ['rajkamalraju41@gmail.com'], fail_silently = False)
+                    send_mail(settings.EMAIL_SUBJECT.format(student_name,class_name), settings.EMAIL_BODY.format(class_name), settings.EMAIL_HOST_USER, [student_obj.email], fail_silently = False)
                     return render(request, 'register.html',{'user_obj':student_obj,'message':message,'class_name':class_name})
             except:
                 student_obj=Student(student_name=name, email=email, password=password1)
@@ -137,7 +137,7 @@ def register(request,class_name):
                 student_obj.save()
                 message="New user with classroom registration completed"
                 student_name=student_obj.student_name
-                send_mail(settings.EMAIL_SUBJECT.format(student_name,class_name), settings.EMAIL_BODY.format(class_name), settings.EMAIL_HOST_USER, ['rajkamalraju41@gmail.com'], fail_silently = False)
+                send_mail(settings.EMAIL_SUBJECT.format(student_name,class_name), settings.EMAIL_BODY.format(class_name), settings.EMAIL_HOST_USER, [student_obj.email], fail_silently = False)
                 return render(request, 'register.html',{'message':message,'class_name':class_name})
                 
         else:
@@ -155,10 +155,9 @@ def register(request,class_name):
                 student_obj.classroom.add(c_obj)
                 student_obj.save()
                 message='old user class Registration successful user already loggedin'
-                # # email(user_obj.student_name,c.class_name,subjects,user_obj.email)
-                # email("RAJ","CLASSROOM1","datascie pythion","rajkamalraju41@gmail.com")
+                
                 student_name=student_obj.student_name
-                send_mail(settings.EMAIL_SUBJECT.format(student_name,class_name), settings.EMAIL_BODY.format(class_name), settings.EMAIL_HOST_USER, ['rajkamalraju41@gmail.com'], fail_silently = False)
+                send_mail(settings.EMAIL_SUBJECT.format(student_name,class_name), settings.EMAIL_BODY.format(class_name), settings.EMAIL_HOST_USER, [student_obj.email], fail_silently = False)
                 
                 return render(request, 'register.html',{'user_obj':student_obj,'message':message,'class_name':class_name})
         
